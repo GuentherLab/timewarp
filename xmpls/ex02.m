@@ -11,5 +11,3 @@ hold on; plot(x(1),x(2),'ko','markerfacecolor','k'); hold off;
 hold on; plot(x(1)*[1/2 2],x(2)*[1/2 2],'wo','markerfacecolor','w'); hold off;
 grid on
 axis equal
-
-%
