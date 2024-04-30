@@ -1,6 +1,17 @@
-% show example timewarp procedure
-h=[0.01 0.04 0.09 0.16 0.24 0.33 0.42 0.53 0.63 0.72 0.81 0.88 0.94 0.98 1 1 0.98 0.94 0.88 0.81 0.72 0.63 0.53 0.42 0.33 0.24 0.16 0.09 0.04 0.01];
-T=convn(randn(100,200),h'*h,'same');
-S=T(:,ceil(min(1,(1:.5:size(T,2))/size(T,2)).^.5*size(T,2)));
-S=S+convn(.25*randn(size(S)),h'*h,'same');
-[F,K] = timewarp(S,T,'display',true);
+
+% show example capdist values
+x=[1;2];
+K=10;
+[tc,tr]=ndgrid(linspace(-K,K,1e3), linspace(-K,K,1e3));
+y=[tr(:) tc(:)]';
+d = arrayfun(@(n)capdist(x,y(:,n)),1:size(y,2));
+clf;
+contourf(linspace(-K,K,1e3),linspace(-K,K,1e3),reshape(d,[1e3,1e3]),0:1:50);
+hold on; plot(x(1),x(2),'ko','markerfacecolor','k'); hold off;
+hold on; plot(x(1)*[1/2 2],x(2)*[1/2 2],'wo','markerfacecolor','w'); hold off;
+hold on; text(x(1),x(2)+.5,'SIGNAL','horizontalalignment','center','fontsize',8); hold off;
+hold on; text(x(1)*1/2,x(2)*1/2-.5,'minimum-amplitude signal','horizontalalignment','center','fontsize',8); hold off;
+hold on; text(x(1)*2,x(2)*2+.5,'maximum-amplitude signal','horizontalalignment','center','fontsize',8); hold off;
+grid on
+axis equal off
+hold on; plot([0 0 nan max(get(gca,'xlim'))*[-1 1]],[max(get(gca,'ylim'))*[-1 1] nan 0 0],'k-'); hold off
