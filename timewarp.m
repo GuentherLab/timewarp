@@ -69,7 +69,7 @@ iseuclidean=strcmp(options.cost_distance,'euclidean');
 E=nan(Ns,Nt);
 E(1,1)=0;
 KK=ones(Ns,Nt);
-[nil,KK(1,1)]=capdist(T(:,1),S(:,1),options.cost_capped);
+if ~iseuclidean, [nil,KK(1,1)]=capdist(T(:,1),S(:,1),options.cost_capped); end
 IDX=nan(Ns,Nt);
 if options.norm_input, norm_input=mean(std(T,0,1)); T=T/norm_input; S=S/norm_input; end
 if options.display, hmsg=waitbar(0,'Processing'); end
