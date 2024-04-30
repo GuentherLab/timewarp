@@ -110,9 +110,14 @@ if options.display
     clf;
     subplot(221); imagesc(iE); hold on; plot(F,'k.-'); hold off; xlabel('Time (target)'); ylabel('Time (source)'); set(gca,'ydir','normal');
     subplot(223); plot(K,'k.-'); xlabel('Time (target)'); ylabel('Amplitude scaling factor'); if options.cost_capped>1, set(gca,'ylim',[1/options.cost_capped, options.cost_capped]); end
-    subplot(322); imagesc(real(S)); title('Source'); set(gca,'xtick',unique(F(10:10:size(T,2))),'fontsize',8); grid on
-    subplot(324); imagesc(real(T)); title('Target'); set(gca,'xtick',10:10:size(T,2),'fontsize',8); grid on
-    subplot(326); imagesc(real(K.*S(:,F))); title('Source time-warped to match Target'); xlabel('Time (target)'); set(gca,'xtick',10:10:size(T,2),'fontsize',8); grid on
+    h1=subplot(322); imagesc(real(S)); title('Source'); set(gca,'xtick',unique(F(10:10:size(T,2))),'xticklabel',[],'fontsize',8); grid on
+    h2=subplot(324); imagesc(real(K.*S(:,F))); title('Source time-warped to match Target'); set(gca,'xtick',10:10:size(T,2),'fontsize',8); grid on
+    subplot(326); imagesc(real(T)); title('Target'); set(gca,'xtick',10:10:size(T,2),'fontsize',8); grid on; xlabel('Time (target)'); 
+    h3=axes('position',[get(h1,'position') get(h2,'position')]*[0 0 0 0 1 0 0 0; 0 0 0 0 0 1 0 1; 0 0 1 0 0 0 0 0; 0 1 0 0 0 -1 0 -1]');
+    plot([get(h2,'xtick')/diff(get(h2,'xlim'));get(h1,'xtick')/diff(get(h1,'xlim'))],repmat((1:2)',1,numel(get(h1,'xtick'))),'k-','color',.75*[1 1 1]);
+    set(gca,'xlim',[0 max([get(h1,'xlim') get(h2,'xlim')])]); 
+    axis tight off;
+    set(gcf,'color','w');
 end
 
 
