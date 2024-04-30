@@ -12,6 +12,7 @@ function [F,K]=timewarp(S,T,varargin)
 % Inputs
 %   T [M x Nt] is the target (with M observations and Nt timepoints)
 %   S [M x Ns] is the source that we want to align to the target (with M observations and Ns timepoints)
+%              (note: if S or T are cell arrays the corresponding cell elements are concatenated along the time (second) dimension [S{:}])
 % Outputs
 %   F [1 x Nt] is the timewarp vector, with non-decreasing integer values between 1 and Ns
 %   K [1 x Nt] is the amplitude scaling vector, with values between .5 and 2 (between 1/cost_capped and cost_capped in general)
